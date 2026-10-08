@@ -248,32 +248,33 @@ apparatus.add(gunLabel);
 const fieldGroup = new THREE.Group();
 scene.add(fieldGroup);
 const fieldMarkers = [];
-for (const x of [-1.8, -0.6, 0.6, 1.8]) {
-  for (const y of [-1.8, -0.6, 0.6, 1.8]) {
-    const marker = new THREE.Group();
-    marker.position.set(x, y, -0.15);
-    const ring = new THREE.Mesh(
-      new THREE.TorusGeometry(0.12, 0.018, 6, 24),
-      materials.field
-    );
-    const dot = new THREE.Mesh(
-      new THREE.SphereGeometry(0.045, 12, 10),
-      materials.field
-    );
-    dot.position.z = 0.045;
-    const crossA = new THREE.Mesh(
-      new THREE.BoxGeometry(0.16, 0.024, 0.024),
-      materials.field
-    );
-    const crossB = crossA.clone();
-    crossA.rotation.z = Math.PI / 4;
-    crossB.rotation.z = -Math.PI / 4;
-    crossA.position.z = 0.045;
-    crossB.position.z = 0.045;
-    marker.add(ring, dot, crossA, crossB);
-    fieldGroup.add(marker);
-    fieldMarkers.push({ dot, crossA, crossB });
-  }
+materials.field.color.set(0x5268ad);
+const maxFieldColumns = 7;
+const maxFieldRows = 4;
+for (let index = 0; index < maxFieldColumns * maxFieldRows; index++) {
+  const marker = new THREE.Group();
+  marker.position.z = -0.15;
+  const ring = new THREE.Mesh(
+    new THREE.TorusGeometry(0.12, 0.018, 6, 24),
+    materials.field
+  );
+  const dot = new THREE.Mesh(
+    new THREE.SphereGeometry(0.045, 12, 10),
+    materials.field
+  );
+  dot.position.z = 0.045;
+  const crossA = new THREE.Mesh(
+    new THREE.BoxGeometry(0.16, 0.024, 0.024),
+    materials.field
+  );
+  const crossB = crossA.clone();
+  crossA.rotation.z = Math.PI / 4;
+  crossB.rotation.z = -Math.PI / 4;
+  crossA.position.z = 0.045;
+  crossB.position.z = 0.045;
+  marker.add(ring, dot, crossA, crossB);
+  fieldGroup.add(marker);
+  fieldMarkers.push({ marker, dot, crossA, crossB });
 }
 
 const beamGroup = new THREE.Group();
@@ -648,11 +649,28 @@ function createBeam(radius) {
 }
 
 function updateFieldDirection() {
-  for (const marker of fieldMarkers) {
-    marker.dot.visible = state.current > 0 && state.fieldDirection > 0;
-    marker.crossA.visible = state.current > 0 && state.fieldDirection < 0;
-    marker.crossB.visible = state.current > 0 && state.fieldDirection < 0;
-  }
+  const relativeStrength = state.current / Number(currentInput.max);
+  const columns = state.current === 0 ? 0 : 3 + Math.round(relativeStrength * 4);
+  const rows = state.current === 0 ? 0 : 2 + Math.round(relativeStrength * 2);
+  const visibleCount = columns * rows;
+  materials.field.opacity = 0.72 + relativeStrength * 0.24;
+  fieldMarkers.forEach((entry, index) => {
+    const visible = index < visibleCount;
+    entry.marker.visible = visible;
+    if (visible) {
+      const column = index % columns;
+      const row = Math.floor(index / columns);
+      entry.marker.position.set(
+        -2 + column * 4 / (columns - 1),
+        -0.72 + row * 1.44 / (rows - 1),
+        -0.15
+      );
+    }
+    entry.marker.scale.setScalar(0.9 + relativeStrength * 0.15);
+    entry.dot.visible = state.fieldDirection > 0;
+    entry.crossA.visible = state.fieldDirection < 0;
+    entry.crossB.visible = state.fieldDirection < 0;
+  });
   fieldGroup.visible = state.showField && state.current > 0;
 }
 
@@ -700,13 +718,13 @@ function update(changedParameter = '') {
   } else if (changedParameter === 'voltage') {
     observation.textContent = 'Bei niedrigerer Spannung bewegen sich die Elektronen langsamer. Der Bahnradius wird kleiner.';
   } else if (changedParameter === 'current' && state.current > previousCurrent) {
-    observation.textContent = 'Mehr Spulenstrom erzeugt ein stärkeres Magnetfeld. Die Bahn wird enger gekrümmt.';
+    observation.textContent = 'Mehr Spulenstrom verstärkt das Magnetfeld: Die Feldsymbole werden dichter, und die Bahn wird enger gekrümmt.';
   } else if (changedParameter === 'current') {
-    observation.textContent = 'Weniger Spulenstrom schwächt das Magnetfeld. Der Bahnradius wird größer.';
+    observation.textContent = 'Weniger Spulenstrom schwächt das Magnetfeld. Die Symbole bleiben über die ganze Fläche verteilt, stehen aber weiter auseinander.';
   } else if (changedParameter === 'direction') {
     observation.textContent = 'Kehrst du das Magnetfeld um, ändert sich die Ablenkungsrichtung. Der Bahnradius bleibt gleich.';
   } else {
-    observation.textContent = 'Vergleiche: Höhere Spannung vergrößert den Radius, stärkerer Spulenstrom verkleinert ihn.';
+    observation.textContent = 'Vergleiche: Mehr Spulenstrom verstärkt das Magnetfeld und verkleinert den Bahnradius.';
   }
   fieldDirectionLabel.textContent = state.fieldDirection > 0
     ? 'Aus der Ebene' : 'In die Ebene';

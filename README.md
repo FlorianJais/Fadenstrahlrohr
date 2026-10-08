@@ -44,6 +44,8 @@ Die Elektronen werden aus der Ruhe durch die Beschleunigungsspannung `U` beschle
 
 Für die Messwertanzeige werden 130 Windungen und ein Spulenradius von 18 cm angenommen. Randfelder, Reibung und relativistische Effekte bleiben unberücksichtigt. Die dreidimensionale Darstellung ist schematisch skaliert; Feldstärke und Bahnradius werden aus den physikalischen Größen berechnet.
 
+Die Feldstärke wird proportional zum Spulenstrom berechnet. Zur qualitativen Veranschaulichung sind die Feldsymbole bei jedem positiven Strom zunächst weitmaschig über die gesamte Rohrfläche verteilt. Mit höherem Strom wird das Raster gleichmäßig dichter; bei 0 A werden die Symbole ausgeblendet.
+
 Bei 0 A ist das Magnetfeld null. Damit wirkt keine Lorentzkraft: Der Elektronenstrahl verläuft gerade, die Feldsymbole verschwinden und der Bahnradius wird als unendlich angezeigt.
 
 Das Fadenstrahlrohr ist als geschlossener Glaszylinder modelliert. Die Bahn wird an der Innenwand oder an einer Stirnfläche beendet; auch bei kleinem Spulenstrom kann sie daher nicht außerhalb des Rohres weiterlaufen.
