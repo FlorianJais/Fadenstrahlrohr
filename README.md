@@ -13,6 +13,14 @@ npm run dev
 
 Danach die von Vite angezeigte lokale Adresse im Browser öffnen. Ein Produktionsbuild lässt sich mit `npm run build` erstellen.
 
+## Öffentlich mit GitHub Pages bereitstellen
+
+Die GitHub-Actions-Workflowdatei baut und veröffentlicht die Simulation bei jedem Push auf den Branch `main`. Im Repository unter **Settings → Pages → Build and deployment** muss als Source **GitHub Actions** ausgewählt sein. Nach dem ersten erfolgreichen Lauf ist die Seite unter folgender Adresse verfügbar:
+
+`https://florianjais.github.io/Fadenstrahlrohr/`
+
+Nach weiteren Änderungen reicht ein Commit und Push auf `main`; GitHub Actions veröffentlicht dann automatisch die neue Version.
+
 ## Im Modell untersuchen
 
 - Beschleunigungsspannung und Spulenstrom unabhängig voneinander verändern
