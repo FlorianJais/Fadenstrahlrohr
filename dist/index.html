@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f2f5f7">
+  <title>Elektronen im Magnetfeld – 3D-Simulation</title>
+  <script type="module" crossorigin src="/assets/index-De065h6D.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-BiV8XNi6.css">
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Startseite">
+        <span class="brand-mark" aria-hidden="true">Φ</span>
+        <span>PHYSIK <span class="brand-light">INTERAKTIV</span></span>
+      </a>
+      <span class="class-tag">KLASSE 10 · ELEKTRIZITÄT &amp; MAGNETISMUS</span>
+    </header>
+
+    <main>
+      <section class="intro">
+        <div>
+          <p class="eyebrow">VIRTUELLES EXPERIMENT</p>
+          <h1>Elektronen im Magnetfeld</h1>
+          <p class="lede">Wie beeinflussen Spannung und Magnetfeld die Bahn eines Elektrons?</p>
+        </div>
+        <span class="experiment-chip"><span class="live-dot"></span> 3D-SIMULATION</span>
+      </section>
+
+      <section class="workspace" aria-label="Simulation und Einstellungen">
+        <div class="simulation-card">
+          <div class="scene-toolbar">
+            <span class="scene-title"><span class="status-dot"></span> FADENSTRAHLROHR · HELMHOLTZSPULEN</span>
+            <button id="resetView" class="icon-button" type="button" title="Ansicht zurücksetzen">Ansicht zurücksetzen</button>
+          </div>
+          <div id="scene" aria-label="Drehbare 3D-Darstellung des Fadenstrahlrohrs mit zwei Netzgeräten, Helmholtzspulen und Anschlussleitungen"></div>
+          <div class="scene-footer">
+            <span><kbd>MAUS</kbd> Ziehen: drehen</span>
+            <span><kbd>SCROLLEN</kbd> Zoomen</span>
+            <label class="mini-toggle"><input id="fieldToggle" type="checkbox" checked><span>Magnetfeld anzeigen</span></label>
+          </div>
+        </div>
+
+        <aside class="panel">
+          <div class="panel-heading">
+            <div><p class="eyebrow">VERSUCHSPARAMETER</p><h2>Steuere den Versuch</h2></div>
+            <span class="panel-number">01</span>
+          </div>
+
+          <label class="control" for="voltage">
+            <span class="control-title">Beschleunigungsspannung <strong id="voltageValue">180 V</strong></span>
+            <input id="voltage" type="range" min="80" max="250" step="1" value="180">
+            <span class="range-labels"><span>80 V</span><span>250 V</span></span>
+          </label>
+
+          <label class="control" for="current">
+            <span class="control-title">Spulenstrom <strong id="currentValue">2,0 A</strong></span>
+            <input id="current" type="range" min="0" max="4" step="0.1" value="2">
+            <span class="range-labels"><span>0 A</span><span>4,0 A</span></span>
+          </label>
+
+          <div class="direction-row">
+            <div><span class="control-title">Magnetfeldrichtung</span><small>Kehrt die Ablenkung um</small></div>
+            <button id="reverseField" class="direction-button" type="button" aria-pressed="false">
+              <span aria-hidden="true">↻</span><span id="fieldDirection">Aus der Ebene</span>
+            </button>
+          </div>
+
+          <div class="readouts" aria-live="polite">
+            <div class="readout"><span>Magnetfeldstärke B</span><strong id="fieldValue">1,31 mT</strong></div>
+            <div class="readout"><span>Bahnradius r</span><strong id="radiusValue">—</strong></div>
+          </div>
+
+          <div class="insight">
+            <span class="insight-icon" aria-hidden="true">↗</span>
+            <div><strong>Was fällt dir auf?</strong><p id="observation">Ändere eine Größe und beobachte, wie sich die Bahn krümmt.</p></div>
+          </div>
+
+          <div class="legend" aria-label="Legende">
+            <span><i class="legend-dot electron"></i>Elektronenbahn</span>
+            <span><i class="legend-dot field"></i>Magnetfeld B</span>
+            <span><i class="legend-dot coil"></i>Spulenstrom I</span>
+          </div>
+        </aside>
+      </section>
+
+      <section class="learning-strip" aria-label="Physikalischer Zusammenhang">
+        <div class="learning-heading"><span class="formula-mark">ƒ</span><div><p class="eyebrow">ZUM VERSTEHEN</p><h2>Warum wird der Strahl abgelenkt?</h2></div></div>
+        <div class="learning-copy">
+          <p>Auf bewegte Elektronen wirkt im Magnetfeld die <strong>Lorentzkraft</strong>. Sie steht senkrecht zur Bewegungsrichtung und lenkt den Strahl auf eine Kreisbahn.</p>
+          <div class="formula"><span>Bahnradius</span><strong>r = <span class="fraction"><i>m · v</i><i>|q| · B</i></span></strong><span class="formula-note">Spannung erhöht v · stärkeres B verkleinert r</span></div>
+        </div>
+      </section>
+      <p class="model-note">Modell: homogenes Magnetfeld im Spulenbereich; Randfelder und relativistische Effekte werden vernachlässigt. Die Messwerte verwenden die Elektronenmasse und die Helmholtzspulen-Näherung.</p>
+    </main>
+    <footer><span>INTERAKTIVES LERNMODELL</span><span>Experimentiere: Verändere immer nur eine Größe.</span></footer>
+  </div>
+</body>
+</html>
